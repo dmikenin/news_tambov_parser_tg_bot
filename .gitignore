@@ -127,7 +127,7 @@ dmypy.json
 # IDE
 /.idea
 /.vscode
-
+.idea
 # DB
 db.sqlite3
 
@@ -140,3 +140,5 @@ db.sqlite3
 config.py
 
 /logs
+
+core/geckodriver.log

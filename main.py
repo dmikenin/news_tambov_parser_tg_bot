@@ -1,24 +1,36 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares import logging
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
-from aiogram.dispatcher.webhook import SendMessage
 from aiogram.utils.executor import start_webhook
+
+from core.parser import ParserOnlineTambov
+
+import datetime
 
 import keyboard as kb
 
 from config import TOKEN, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT, WEBHOOK_URL
+from config import keys_section_list
 
 bot = Bot(TOKEN)
 dp = Dispatcher(bot)
+bot.parse_mode = 'Markdown'
 
 dp.middleware.setup(LoggingMiddleware())
 
-@dp.callback_query_handler(text=['news', 'social'])
-async def get_news(callback_query: types.CallbackQuery):
-    # await bot.edit_message_text(callback_query.from_user.id)
-    # await callback_query.answer('Hello')
-    text = 'hello'
-    await callback_query.message.edit_text(text)
+@dp.callback_query_handler(text=keys_section_list)
+async def get_news_from_section(callback_query: types.CallbackQuery):
+    parser = ParserOnlineTambov()
+    result_parser = parser.call(callback_query.data)
+    date = datetime.datetime.today()
+
+    await callback_query.message.answer('Статьи на {date_query}'.format(date_query=date.strftime('%d-%m-%Y %H:%M')))
+
+    for item in result_parser:
+        await callback_query.message.answer(item)
+
+    await callback_query.message.answer('Новых материалов нет') #Dont have new articles
+
 
 
 @dp.message_handler(text='Получить новости')
