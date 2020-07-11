@@ -141,4 +141,4 @@ config.py
 
 /logs
 
-core/geckodriver.log
+parser/geckodriver.log
