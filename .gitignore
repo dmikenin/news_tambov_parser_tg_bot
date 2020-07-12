@@ -142,3 +142,6 @@ config.py
 /logs
 
 parser/geckodriver.log
+
+config.py
+/config.py

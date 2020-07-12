@@ -2,11 +2,12 @@ from bs4 import BeautifulSoup
 import requests
 import time
 
+from parser.parser_factory import AbstractParserOnlineTambov
 from services.redis_operation import RedisOperation
 import logging
 
 
-class ParserOnlineTambov:
+class ParserOnlineTambov(AbstractParserOnlineTambov):
     CATALOG_LINK = {
         'society': 'society',
         'jkh': "jkh",
