@@ -8,13 +8,12 @@ import keyboard as kb
 
 from config import TOKEN, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT, WEBHOOK_URL
 from config import keys_section_list
-from parser.build_parser import BuildParserResult
 
 from parser.online_tambov import ParserOnlineTambov
 
 import logging
 
-from parser.parser_factory import ParserFactory
+from parser.parser import Parser
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,11 +25,8 @@ dp.middleware.setup(LoggingMiddleware())
 
 @dp.callback_query_handler(text=keys_section_list)
 async def get_news_from_section(callback_query: types.CallbackQuery):
-    build_parser = BuildParserResult()
-    result_parser = build_parser.build(ParserFactory, callback_query.data, callback_query.from_user)
-
-    # parser = ParserOnlineTambov()
-    # result_parser = parser.call(callback_query.data, callback_query.from_user.id)
+    parser = Parser()
+    result_parser = parser.call(callback_query.data, callback_query.from_user.id)
     date = datetime.datetime.today()
     await callback_query.message.answer('*Статьи на {date_query}*'.format(date_query=date.strftime('%d.%m.%Y %H:%M')))
 

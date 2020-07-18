@@ -2,12 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import time
 
-from parser.parser_factory import AbstractParserOnlineTambov
 from services.redis_operation import RedisOperation
 import logging
 
 
-class ParserOnlineTambov(AbstractParserOnlineTambov):
+class ParserOnlineTambov:
     CATALOG_LINK = {
         'society': 'society',
         'jkh': "jkh",
@@ -32,6 +31,7 @@ class ParserOnlineTambov(AbstractParserOnlineTambov):
         redis.set_link(result_parser[0], user_id)
         return result_parser
 
+
     def get_data(self, section):
         total = 0
         while total < 1:
@@ -51,7 +51,9 @@ class ParserOnlineTambov(AbstractParserOnlineTambov):
         try:
             big_data = self.get_data(self.get_name_catalog(section))
             processed_data = self.process_data(big_data, user_id)
+
+            print('processed_data', processed_data)
+
             return processed_data
         except Exception as e:
-            logging.warning('Parser online tambov', e)
             return []
