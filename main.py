@@ -54,13 +54,13 @@ async def echo(message: types.Message):
     await message.reply('Получите новости кликнув по клавиатуре', reply_markup=kb.main_kb)
 
 
-async def on_startup(dp):
-    await bot.set_webhook(WEBHOOK_URL)
+# async def on_startup(dp):
+#     await bot.set_webhook(WEBHOOK_URL)
 
 
 async def on_shutdown(dp):
     logging.warning('Shutting down..')
-    await bot.delete_webhook()
+    # await bot.delete_webhook()
     await dp.storage.close()
     await dp.storage.wait_closed()
 
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
-        on_startup=on_startup,
+        # on_startup=on_startup,
         on_shutdown=on_shutdown,
         skip_updates=True,
         host=WEBAPP_HOST,

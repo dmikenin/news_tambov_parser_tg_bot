@@ -21,11 +21,11 @@ python main.py
 ## Next step
 Add new parser
 
-Clean static attribute from classes and transfer attribute in init method (early i did static attribute, because was problem with python env in Linux)
+Clean static attribute from classes and transfer attribute in init method (early i did static attribute, because was problem with python in Linux)
 
 ## Author
 **Denis Mikenin** - *Backend/flutter developer* -
-    [my web-site](https://mikenin.com)
+    [my web-site](http://mikenin.com)
 
 
 
